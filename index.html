@@ -40,7 +40,6 @@
             -webkit-hyphens: auto;
             -moz-hyphens: auto;
             -ms-hyphens: auto;
-            text-indent: 2em; /* 添加段落首行缩进 */
             word-spacing: normal; /* 控制单词间距 */
             word-spacing: normal; /* 控制单词间距 */
         }
@@ -275,7 +274,6 @@
             <p>
                 In our empirical study, we found that training a low-bitrate speech codec from scratch is challenging, especially for VQ-GAN based speech codecs. 
                 To address this challenge, we designed a multi-stage, multi-task learning framework consisting of pre-training and post-training stages. In the pre-training stage, we employ multi-task learning to simultaneously model semantic features and coarse acoustic features. In the post-training stage, we focus on modeling fine-grained acoustic features. This section elaborates on these stages in detail.
-                <!-- In Our proposed <strong>XY-Tokenizer</strong> is a multi-stage, multi-task learning framework that leverages pretrained ASR/SSL models as fixed encoders. The framework consists of three stages: -->
                 Reconstructed audio samples after pre-training stage and post-training stage are shown in <a href="#demo-pre-train-post-train-stage" class="demo-ref"><strong>Demo X</strong></a>.
             </p>
 
@@ -307,6 +305,11 @@
                     </tbody>
                 </table>
             </div>
+            <div class="caption-container" style="font-size: 0.9em; color: #666; margin-top: 8px; text-align: left;">
+                <p class="demo-caption">
+                    Reconstructed audio samples of XY-Tokenizer after pre-training and post-training stage. 
+                </p>
+            </div>
 
 
             <h3> Pre-training Stage </h3>
@@ -314,7 +317,7 @@
                     <img src="./assets/Pre-training.jpg" alt="Pre-training Stage">
                     <figcaption>
                         Pre-training stage of XY-Tokenizer.  It utilize a 2-channel encoder-decoder structure, forming an <strong>X-shaped</strong> architecture.
-                    In the post-training stage (as shown in <a href="#Post-training" class="fig-ref"><strong>Figure X</strong></a>), we focus on modeling fine-grained acoustic features to improve audio quality. Building upon the model from the pre-training stage, we incorporate discriminators to enhance the perceptual quality of the reconstructed audio. We freeze the encoder and quantizer, discard the semantic decoder, and make only the decoder and discriminators trainable. Specifically, we employ a combination of mel-spectrogram reconstruction loss and GAN loss (consisting of adversarial loss, discriminator loss, and feature matching loss). This stage significantly improves the naturalness and fidelity of the reconstructed speech while maintaining the semantic alignment achieved in the pre-training stage.
+                    <!-- In the post-training stage (as shown in <a href="#Post-training" class="fig-ref"><strong>Figure X</strong></a>), we focus on modeling fine-grained acoustic features to improve audio quality. Building upon the model from the pre-training stage, we incorporate discriminators to enhance the perceptual quality of the reconstructed audio. We freeze the encoder and quantizer, discard the semantic decoder, and make only the decoder and discriminators trainable. Specifically, we employ a combination of mel-spectrogram reconstruction loss and GAN loss (consisting of adversarial loss, discriminator loss, and feature matching loss). This stage significantly improves the naturalness and fidelity of the reconstructed speech while maintaining the semantic alignment achieved in the pre-training stage. -->
                 </figure>
                 <p>
                     In the pre-training stage (as shown in <a href="#Pre-training" class="fig-ref"><strong>Figure X</strong></a>), we focus on two tasks: audio reconstruction and automatic speech recognition (ASR). All model parameters are trainable, except for the weights of the semantic encoder, which is initialized from Whisper encoder<d-cite bibtex-key="radford2022robustspeechrecognitionlargescale"></d-cite>, and the large language model (LLM), which is initialized from Qwen2.5<d-cite bibtex-key="yang2024qwen2"></d-cite>.
@@ -326,7 +329,7 @@
                 <figure style="margin-bottom: 20px;" id="Post-training">
                     <img src="./assets/Post-training.jpg" alt="Post-training Stage">
                     <figcaption>
-                        Post-training stage of XY-Tokenizer. The decoder discards the text-alignment module and it forms an <strong>Y-shaped</strong> architecture.
+                        Post-training stage of XY-Tokenizer. The decoder discards the text-alignment module and it forms a <strong>Y-shaped</strong> architecture.
                     </figcaption>
                 </figure>
                 <p>
@@ -339,8 +342,6 @@
 
 
 
-        <!-- <p>
-            In the first stage, we train a <strong>semantic encoder</strong> using the pre-trained Whisper model. The encoder is trained to reconstruct the text from the audio.
-        </p>
-        <p>
-            In the second stage, we train a <strong>semantic decoder</strong> using the pre-trained HuBERT model. The decoder is trained to reconstruct the audio from the text.
+    <!-- <distill-footer></distill-footer> -->
+
+</body>
