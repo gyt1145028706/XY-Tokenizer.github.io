@@ -43,6 +43,51 @@
             word-spacing: normal; /* 控制单词间距 */
             word-spacing: normal; /* 控制单词间距 */
         }
+        
+        /* 表格水平滚动样式 */
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            max-width: var(--body-width);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 确保表格内容不会被压缩 */
+        .table-responsive table {
+            width: auto;
+            min-width: 100%;
+        }
+        
+        /* 确保音频控件有固定宽度 */
+        audio {
+            width: 140px !important;
+        }
+        
+        /* 确保表格中的文本没有多余的空格 */
+        td strong, th strong {
+            padding: 0;
+            margin: 0;
+            display: inline-block;
+        }
+        
+        /* 音频表格样式 */
+        .audio-comparison-table td {
+            padding: 10px 5px !important;
+            vertical-align: middle !important;
+        }
+        
+        .audio-comparison-table td:first-child {
+            min-width: 150px !important;
+        }
+        
+        .audio-comparison-table audio {
+            margin: 0px;
+            display: block;
+            margin: 0 auto;
+        }
     </style>
     <script>
         // 在文档加载完成后执行
@@ -229,7 +274,7 @@
             </table>
         
             <div class="table-responsive pt-3" id="demo-audio-samples">
-                <table class="table table-hover pt-2">
+                <table class="table table-hover pt-2 audio-comparison-table">
                     <thead>
                         <tr>
                             <th style="text-align: center">GroundTruth</th>
@@ -278,7 +323,7 @@
             </p>
 
             <div class="table-responsive pt-3" id="demo-pre-train-post-train-stage">
-                <table class="table table-hover pt-2">
+                <table class="table table-hover pt-2 audio-comparison-table">
                     <thead>
                         <tr>
                             <th style="text-align: center">GroundTruth</th>
@@ -336,11 +381,154 @@
                     In the post-training stage (as shown in <a href="#Post-training" class="fig-ref"><strong>Figure X</strong></a>), we focus on modeling fine-grained acoustic features to improve audio quality. Building upon the model from the pre-training stage, we incorporate discriminators to enhance the perceptual quality of the reconstructed audio. We freeze the encoder and quantizer, discard the semantic decoder, and keep only the decoder and discriminators trainable. Specifically, we employ a combination of mel-spectrogram reconstruction loss and GAN loss (consisting of adversarial loss, discriminator loss, and feature matching loss). This stage significantly improves the naturalness and fidelity of the reconstructed speech while maintaining the semantic alignment achieved in the pre-training stage.
                 </p>
         
-        </d-article>
+        
 
+        
+
+        <h2>Experiment Results</h2>
+            <div class="table-responsive pt-3" id="demo-reconstructs-of-codecs">
+                <table class="table table-hover pt-2 audio-comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center; vertical-align: middle; "></th>
+                            <th style="text-align: center; vertical-align: middle; ">Speech-1</th>
+                            <th style="text-align: center; vertical-align: middle; ">Speech-2</th>
+                            <th style="text-align: center; vertical-align: middle; ">Speech-3</th>
+                            <th style="text-align: center; vertical-align: middle; ">Speech-4</th>
+                            <th style="text-align: center; vertical-align: middle; ">Sound-1</th>
+                            <th style="text-align: center; vertical-align: middle; ">Sound-2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>Ground-Truth</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/gt/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/gt/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/gt/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/gt/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/gt/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/gt/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>DAC-8</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_8/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_8/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_8/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_8/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_8/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_8/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>SpeechTokenizer</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>Mimi-32</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_32/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_32/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_32/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_32/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_32/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_32/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>DAC-2</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_2/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_2/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_2/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_2/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_2/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/dac_24_2/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>BigCodec</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/bigcodec/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/bigcodec/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/bigcodec/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/bigcodec/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/bigcodec/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/bigcodec/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>SpeechTokenizer-x1</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x1/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x1/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x1/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x1/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x1/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x1/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>SpeechTokenizer-x2</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x2/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x2/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x2/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x2/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x2/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x2/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>SpeechTokenizer-x3</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x3/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x3/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x3/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x3/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x3/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/speechtokenizer-x3/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>Mimi-8</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_8/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_8/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_8/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_8/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_8/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/mimi_8/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>Baichuan</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/baichuan/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/baichuan/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/baichuan/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/baichuan/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/baichuan/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/baichuan/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>XCodec2.0</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xcodec2/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xcodec2/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xcodec2/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xcodec2/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xcodec2/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xcodec2/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>                        
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle; min-width: 120px; padding: 0;"><strong>XY-Tokenizer (ours)</strong></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xy_tokenizer/0.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xy_tokenizer/1.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xy_tokenizer/2.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xy_tokenizer/3.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xy_tokenizer/4.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center; vertical-align: middle; padding: 0;"><audio controls="controls" style="width: 140px;"><source src="https://audio.mosi-ai.com/codec_demo/reconstructs/xy_tokenizer/5.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="caption-container" >
+                <p class="demo-caption">
+                    Reconstructed audio samples of XY-Tokenizer after pre-training and post-training stage. 
+                </p>
+            </div>
+
+
+        </d-article>            
         <d-bibliography src="bibliography.bib"></d-bibliography>
-
-
 
     <!-- <distill-footer></distill-footer> -->
 
