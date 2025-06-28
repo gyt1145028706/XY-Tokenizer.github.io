@@ -1,0 +1,346 @@
+<!--
+    Copyright 2018 The Distill Template Authors
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!doctype html>
+
+<head>
+    <script src="./template.v2.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf8">
+    <style>
+        /* 统一的图表标题样式 */
+        figure figcaption, table caption, .table-responsive caption, .demo-caption {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 8px;
+            text-align: left;
+        }
+        
+        table caption, .table-responsive caption, .demo-caption {
+            caption-side: bottom;
+            text-align: left;
+        }
+        
+        /* 添加正文两端对齐样式 */
+        d-article p {
+            text-align: justify;
+            hyphens: auto;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            -ms-hyphens: auto;
+            text-indent: 2em; /* 添加段落首行缩进 */
+            word-spacing: normal; /* 控制单词间距 */
+            word-spacing: normal; /* 控制单词间距 */
+        }
+    </style>
+    <script>
+        // 在文档加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有普通表格的caption
+            const tableCaptions = document.querySelectorAll('table:not(.table) caption');
+            // 为每个caption添加表格编号
+            tableCaptions.forEach((caption, index) => {
+                const tableNum = index + 1;
+                const captionText = caption.innerHTML;
+                // 检查是否已经有Table X:格式的标题
+                if (!captionText.match(/^<strong>Table \d+:<\/strong>/)) {
+                    caption.innerHTML = `<strong>Table ${tableNum}:</strong> ` + captionText.replace(/^<strong>Table \d+:<\/strong>\s*/, '');
+                }
+            });
+            
+            // 获取所有figure的figcaption
+            const figcaptions = document.querySelectorAll('figure figcaption');
+            // 为每个figcaption添加图片编号
+            figcaptions.forEach((figcaption, index) => {
+                const figNum = index + 1;
+                const figcaptionText = figcaption.innerHTML;
+                // 检查是否已经有Figure X:格式的标题
+                if (!figcaptionText.match(/^<strong>Figure \d+:<\/strong>/)) {
+                    figcaption.innerHTML = `<strong>Figure ${figNum}:</strong> ` + figcaptionText.replace(/^<strong>Figure \d+:<\/strong>\s*/, '');
+                }
+            });
+            
+            // 获取所有demo表格的caption (包括demo-caption类)
+            const demoCaptions = document.querySelectorAll('.table-responsive caption, .table caption, .demo-caption');
+            // 为每个demo caption添加编号
+            demoCaptions.forEach((caption, index) => {
+                const demoNum = index + 1;
+                const captionText = caption.innerHTML;
+                // 检查是否已经有Demo X:格式的标题
+                if (!captionText.match(/^<strong>Demo \d+:<\/strong>/)) {
+                    caption.innerHTML = `<strong>Demo ${demoNum}:</strong> ` + captionText.replace(/^<strong>Demo \d+:<\/strong>\s*/, '');
+                }
+            });
+            
+            // 处理引用链接
+            function updateReferences() {
+                // 处理图片引用 - 获取所有figure元素，不仅仅是带有ID的
+                const allFigures = document.querySelectorAll('figure');
+                const figureRefs = document.querySelectorAll('a.fig-ref');
+                
+                // 创建ID到索引的映射
+                const figureIdToIndex = {};
+                allFigures.forEach((figure, index) => {
+                    if (figure.id) {
+                        figureIdToIndex[figure.id] = index + 1; // 编号从1开始
+                    }
+                });
+                
+                // 更新引用
+                figureRefs.forEach(ref => {
+                    const targetId = ref.getAttribute('href').substring(1); // 移除开头的#
+                    if (figureIdToIndex[targetId]) {
+                        ref.innerHTML = ref.innerHTML.replace(/Figure X/, `Figure ${figureIdToIndex[targetId]}`);
+                    }
+                });
+                
+                // 处理表格引用
+                const tables = document.querySelectorAll('table[id]');
+                const tableRefs = document.querySelectorAll('a.table-ref');
+                
+                tables.forEach((table, index) => {
+                    const tableNum = index + 1;
+                    const tableId = table.id;
+                    
+                    // 更新引用这个表格的链接文本
+                    tableRefs.forEach(ref => {
+                        if (ref.getAttribute('href') === `#${tableId}`) {
+                            ref.innerHTML = ref.innerHTML.replace(/Table X/, `Table ${tableNum}`);
+                        }
+                    });
+                });
+                
+                // 处理演示引用
+                const demos = document.querySelectorAll('.table-responsive[id]');
+                const demoRefs = document.querySelectorAll('a.demo-ref');
+                
+                demos.forEach((demo, index) => {
+                    const demoNum = index + 1;
+                    const demoId = demo.id;
+                    
+                    // 更新引用这个演示的链接文本
+                    demoRefs.forEach(ref => {
+                        if (ref.getAttribute('href') === `#${demoId}`) {
+                            ref.innerHTML = ref.innerHTML.replace(/Demo X/, `Demo ${demoNum}`);
+                        }
+                    });
+                });
+            }
+            
+            // 执行引用更新
+            updateReferences();
+        });
+    </script>
+</head>
+
+<body>
+    <distill-header></distill-header>
+    <d-front-matter>
+        <script id='distill-front-matter' type="text/json">{
+        "title": "  XY-Tokenizer: Mitigating the Semantic-Acoustic Conflict in Low-Bitrate Speech Codecs",
+        "published": "Jun 28, 2025",
+        "authors": [
+            {
+                "author":"Yitian Gong",
+                "authorURL":"",
+                "affiliations": [{"name": "MOSS Team"}]
+            },
+            {
+                "author":"xxx",
+                "authorURL":"",
+                "affiliations": [{"name": "MOSS Team"}]
+            },
+            {
+                "author":"Xipeng Qiu",
+                "authorURL":"",
+                "affiliations": [{"name": "MOSS Team"}]
+            }
+        ],
+        "katex": {
+            "delimiters": [
+                {"left": "$$", "right": "$$", "display": false}
+            ]
+        }
+        }</script>
+    </d-front-matter>
+    <d-byline></d-byline>
+    <d-article>
+        <figure style="margin-bottom: 20px;">
+            <img src="assets/XY-Tokenizer-Final.jpg" alt="XY-Tokenizer Final Image">
+            <figcaption>
+                Illustration of <strong>XY-Tokenizer</strong>. The upper half depicts the pre-training stage, aligning <strong>XY-Tokenizer</strong> with text while preserving coarse acoustic features. The lower half illustrates the post-training stage, modeling finer-grained acoustic features. 
+            </figcaption>
+        </figure>
+        <h2>Overview</h2>
+            <p>
+                Speech codecs serve as bridges between speech signals and large language models. An ideal codec for speech language models should not only preserve acoustic information but also capture rich semantic information. However, existing speech codecs struggle to balance high-quality audio reconstruction with ease of modeling by language models. In this study, we analyze the limitations of previous codecs in balancing semantic richness and acoustic fidelity. We propose <strong>XY-Tokenizer</strong>, a novel codec that mitigates the conflict between semantic and acoustic capabilities through multi-stage, multi-task learning. Experimental results demonstrate that XY-Tokenizer achieves performance in both semantic and acoustic tasks comparable to that of state-of-the-art codecs operating at similar bitrates, even though those existing codecs typically excel in only one aspect. Specifically, XY-Tokenizer achieves strong text alignment, surpassing distillation-based semantic modeling methods such as SpeechTokenizer and Mimi, while maintaining a speaker similarity score of 0.83 between reconstructed and original audio. The reconstruction performance of <strong>XY-Tokenizer</strong> is comparable to that of <strong>BigCodec</strong>, the current state-of-the-art among acoustic-only codecs, which achieves a speaker similarity score of 0.84 at a similar bitrate.
+            </p>
+
+        <h2>Preliminary Experiments</h2>
+            <figure style="margin-bottom: 20px;" id="fig-preliminary-study">
+                <img src="assets/Preliminary_Study.png" alt="Preliminary Study Results">
+                <figcaption>
+                    In preliminary experiments, we trained an autoencoder using fixed encoders (Whisper, HuBERT, WavLM) with reconstruction loss only. Only the decoders were trainable during this experiment.
+                </figcaption>
+            </figure>
+            <table id="table-preliminary-results">
+                <tr>
+                    <th>Model</th>
+                    <th>SIM (↑)</th>
+                    <th>STOI (↑)</th>
+                    <th>PESQ-NB (↑)</th>
+                    <th>PESQ-WB (↑)</th>
+                </tr>
+                <tr>
+                    <td>HuBERT</td>
+                    <td>0.42</td>
+                    <td>0.80</td>
+                    <td>1.46</td>
+                    <td>1.20</td>
+                </tr>
+                <tr>
+                    <td>WavLM</td>
+                    <td>0.53</td>
+                    <td>0.83</td>
+                    <td>1.53</td>
+                    <td>1.26</td>
+                </tr>
+                <tr>
+                    <td>Whisper</td>
+                    <td><strong>0.68</strong></td>
+                    <td><strong>0.88</strong></td>
+                    <td><strong>2.03</strong></td>
+                    <td><strong>1.65</strong></td>
+                </tr>
+                <caption>
+                    Comparison between pretrained ASR/SSL models in reconstructed audio quality; bold indicates best performance. Based on ASR task pretraining, Whisper retains more acoustic information than HuBERT and WavLM trained with MLM (Mask Language Model).
+                </caption>
+            </table>
+        
+            <div class="table-responsive pt-3" id="demo-audio-samples">
+                <table class="table table-hover pt-2">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">GroundTruth</th>
+                            <th style="text-align: center">HuBERT</th>
+                            <th style="text-align: center">Wavlm</th>
+                            <th style="text-align: center">Whisper</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/1_gt.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/1_hubert.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/1_wavlm.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/1_whisper.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/2_gt.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/2_hubert.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/2_wavlm.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/2_whisper.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/3_gt.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/3_hubert.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/3_wavlm.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="preliminary_exps/3_whisper.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="caption-container" style="font-size: 0.9em; color: #666; margin-top: 8px; text-align: left;">
+                <p class="demo-caption">
+                    Reconstructed audio samples from preliminary experiments using different pretrained models as fixed encoders. During training, only the decoder was optimized using reconstruction loss. Discriminator was not used, resulting in some metallic artifacts in the reconstructed audio. Listening carefully to these samples reveals that Whisper preserves most acoustic information, while HuBERT and WavLM lose significant acoustic details including speaker timbre and fine-grained acoustic characteristics.
+                </p>
+            </div>
+
+            <p>
+                Before designing our <strong>XY-Tokenizer</strong>, we first conducted a preliminary experiment to evaluate the performance of different pretrained models which contain rich semantic information in preserving acoustic information. We selected three pre-trained models: Whisper<d-cite bibtex-key="radford2022robustspeechrecognitionlargescale"></d-cite>, an ASR model, as well as HuBERT<d-cite bibtex-key="hsu2021hubertselfsupervisedspeechrepresentation"></d-cite> and WavLM<d-cite bibtex-key="Chen_2022"></d-cite>, which are self-supervised learning (SSL) models. We trained an auto-encoder (as shown in <a href="#fig-preliminary-study" class="fig-ref"><strong>Figure X</strong></a>) to assess the reconstruction capabilities of these pre-trained models. Specifically, we used the pre-trained Whisper, HuBERT, and WavLM models as <strong>fixed encoders</strong>, each paired with a decoder of identical parameter size to ensure a fair comparison. As shown in <a href="#table-preliminary-results" class="table-ref"><strong>Table X</strong></a> and reconstructed audios in <a href="#demo-audio-samples" class="demo-ref"><strong>Demo X</strong></a>, Whisper achieves superior reconstruction performance, effectively preserving paralinguistic information, such as speaker timbre and acoustic details. In contrast, HuBERT and WavLM exhibit limitations in retaining certain aspects of speaker timbre and fine-grained acoustic details. Furthermore, Whisper's pretraining on ASR tasks aligns closely with the LLM-based tasks employed in our codec, facilitating better text-speech alignment. Based on these findings, we selected Whisper to initialize the encoder of our proposed XY-Tokenizer and further fine-tuned it for our codec training pipeline.
+            </p>
+
+        <h2>Method</h2>
+            <p>
+                In our empirical study, we found that training a low-bitrate speech codec from scratch is challenging, especially for VQ-GAN based speech codecs. 
+                To address this challenge, we designed a multi-stage, multi-task learning framework consisting of pre-training and post-training stages. In the pre-training stage, we employ multi-task learning to simultaneously model semantic features and coarse acoustic features. In the post-training stage, we focus on modeling fine-grained acoustic features. This section elaborates on these stages in detail.
+                <!-- In Our proposed <strong>XY-Tokenizer</strong> is a multi-stage, multi-task learning framework that leverages pretrained ASR/SSL models as fixed encoders. The framework consists of three stages: -->
+                Reconstructed audio samples after pre-training stage and post-training stage are shown in <a href="#demo-pre-train-post-train-stage" class="demo-ref"><strong>Demo X</strong></a>.
+            </p>
+
+            <div class="table-responsive pt-3" id="demo-pre-train-post-train-stage">
+                <table class="table table-hover pt-2">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">GroundTruth</th>
+                            <th style="text-align: center">After Pre-training Stage</th>
+                            <th style="text-align: center">After Post-training Stage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="pre-train-post-train/0_gt.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="pre-train-post-train/0_pre.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="pre-train-post-train/0_post.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="pre-train-post-train/1_gt.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="pre-train-post-train/1_pre.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="pre-train-post-train/1_post.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="pre-train-post-train/2_gt.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="pre-train-post-train/2_pre.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                            <td style="text-align: center;vertical-align:middle;width: 800px"><audio controls="controls" style="width: 140px;"><source src="pre-train-post-train/2_post.mp3" autoplay/>Your browser does not support the audio element.</audio></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <h3> Pre-training Stage </h3>
+                <figure style="margin-bottom: 20px;" id="Pre-training">
+                    <img src="./assets/Pre-training.jpg" alt="Pre-training Stage">
+                    <figcaption>
+                        Pre-training stage of XY-Tokenizer.  It utilize a 2-channel encoder-decoder structure, forming an <strong>X-shaped</strong> architecture.
+                    In the post-training stage (as shown in <a href="#Post-training" class="fig-ref"><strong>Figure X</strong></a>), we focus on modeling fine-grained acoustic features to improve audio quality. Building upon the model from the pre-training stage, we incorporate discriminators to enhance the perceptual quality of the reconstructed audio. We freeze the encoder and quantizer, discard the semantic decoder, and make only the decoder and discriminators trainable. Specifically, we employ a combination of mel-spectrogram reconstruction loss and GAN loss (consisting of adversarial loss, discriminator loss, and feature matching loss). This stage significantly improves the naturalness and fidelity of the reconstructed speech while maintaining the semantic alignment achieved in the pre-training stage.
+                </figure>
+                <p>
+                    In the pre-training stage (as shown in <a href="#Pre-training" class="fig-ref"><strong>Figure X</strong></a>), we focus on two tasks: audio reconstruction and automatic speech recognition (ASR). All model parameters are trainable, except for the weights of the semantic encoder, which is initialized from Whisper encoder<d-cite bibtex-key="radford2022robustspeechrecognitionlargescale"></d-cite>, and the large language model (LLM), which is initialized from Qwen2.5<d-cite bibtex-key="yang2024qwen2"></d-cite>.
+                    During this stage, we employ three loss functions: mel-spectrogram reconstruction loss, ASR loss (cross-entropy loss for the LLM generator with quantized features as condition), and commitment loss for the quantizer. We do not incorporate a discriminator in the pre-training stage, which helps maintain training stability while focusing on semantic alignment and basic acoustic feature preservation.
+                    After the pre-training stage, XY-Tokenizer achieves strong text alignment while preserving most acoustic features, such as speaker timbre and coarse acoustic characteristics.
+                </p>
+
+            <h3> Post-training Stage </h3>
+                <figure style="margin-bottom: 20px;" id="Post-training">
+                    <img src="./assets/Post-training.jpg" alt="Post-training Stage">
+                    <figcaption>
+                        Post-training stage of XY-Tokenizer. The decoder discards the text-alignment module and it forms an <strong>Y-shaped</strong> architecture.
+                    </figcaption>
+                </figure>
+                <p>
+                    In the post-training stage (as shown in <a href="#Post-training" class="fig-ref"><strong>Figure X</strong></a>), we focus on modeling fine-grained acoustic features to improve audio quality. Building upon the model from the pre-training stage, we incorporate discriminators to enhance the perceptual quality of the reconstructed audio. We freeze the encoder and quantizer, discard the semantic decoder, and keep only the decoder and discriminators trainable. Specifically, we employ a combination of mel-spectrogram reconstruction loss and GAN loss (consisting of adversarial loss, discriminator loss, and feature matching loss). This stage significantly improves the naturalness and fidelity of the reconstructed speech while maintaining the semantic alignment achieved in the pre-training stage.
+                </p>
+        
+        </d-article>
+
+        <d-bibliography src="bibliography.bib"></d-bibliography>
+
+
+
+        <!-- <p>
+            In the first stage, we train a <strong>semantic encoder</strong> using the pre-trained Whisper model. The encoder is trained to reconstruct the text from the audio.
+        </p>
+        <p>
+            In the second stage, we train a <strong>semantic decoder</strong> using the pre-trained HuBERT model. The decoder is trained to reconstruct the audio from the text.

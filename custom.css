@@ -1,0 +1,76 @@
+/* 自定义CSS文件覆盖Distill模板样式 */
+
+:root {
+  --max-width: 1200px;
+  --body-width: 90%;
+  --content-width: 1200px !important;
+  --column-width: 1200px !important;
+  --line-numbers-width: 0 !important;
+}
+
+/* 主要容器元素 */
+d-article, 
+d-appendix, 
+distill-header, 
+d-title, 
+d-byline, 
+d-footnote-list, 
+distill-footer, 
+d-front-matter, 
+.base-grid, 
+body {
+  max-width: var(--max-width) !important;
+  width: var(--body-width) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* 布局网格 */
+.l-body, 
+.l-page, 
+.l-middle-column {
+  max-width: var(--max-width) !important;
+  width: var(--body-width) !important;
+}
+
+/* 文章内容 */
+d-article {
+  contain: none !important;
+  display: block !important;
+}
+
+/* 所有文章内容元素 */
+d-article > * {
+  grid-column: 1 / -1 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* 文本元素 */
+d-article p, 
+d-article ul, 
+d-article ol, 
+d-article blockquote, 
+d-article h1, 
+d-article h2, 
+d-article h3, 
+d-article h4, 
+d-article h5, 
+d-article h6,
+d-article iframe,
+d-article d-code {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* 代码块 */
+d-code {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* 强制文章使用块布局而非网格 */
+d-article {
+  display: block !important;
+  grid-template-columns: none !important;
+} 
