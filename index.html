@@ -398,7 +398,7 @@
 
         
 
-        <h2>Experiment Results</h2>
+        <h2>Speech Codec Comparison</h2>
             <div class="table-responsive pt-3" id="table-codec-comparison">
                 <table class="table table-hover pt-2">
                     <thead>
@@ -557,11 +557,28 @@
                     </tbody>
                 </table>
                 <caption>
-                    xxxx
                     <!-- 不同编解码器在语义和声学性能方面的比较。WER指的是ASR探测任务中测量的词错误率，数值越低表示与原始文本内容的对齐程度越好。对于>2k bps的编解码器，粗体值表示最佳性能；对于低比特率(~1k bps)编解码器，粗体表示性能最好的前两个模型。Baichuan指的是百川音频分词器。 -->
                 </caption>
             </div>
 
+            <figure style="margin-bottom: 20px;" id="fig-asr-probing-task">
+                <img src="assets/ASR_Probing_Task.png" alt="ASR Porbing Task">
+                <figcaption>
+                    The architecture of ASR probing task. During fine-tuning, the encoder and quantizer of codec are fixed.
+                </figcaption>
+            </figure>
+
+            
+            <h3>Reconstruct Evaluation</h3>
+                <p>
+                To evaluate the preservation of acoustic information, we employ several metrics. Speaker similarity (SIM) is calculated as the cosine similarity between speaker embeddings. We also use short-time objective intelligibility (STOI)<d-cite bibtex-key="taal2010short"></d-cite> to measure speech intelligibility and perceptual evaluation of speech quality (PESQ)<d-cite bibtex-key="rix2001perceptual"></d-cite> to assess audio quality. All evaluations were conducted on the LibriSpeech test-clean subset<d-cite bibtex-key="panayotov2015librispeech"></d-cite>.
+                </p>
+    
+            <h3>Semantic Evaluation</h3>
+                <p>
+                To evaluate the semantic alignment between the codec and text, we employ an <strong>automatic speech recognition (ASR) probing task</strong>, adapted from the SUPERB framework<d-cite bibtex-key="yang2021superb"></d-cite>, to assess the semantic quality of tokenized representations (as shown in <a href="#fig-asr-probing-task" class="fig-ref"><strong>Figure X</strong></a>). We trained a downstream ASR model using <strong>quantized embeddings</strong>, with the pretrained codec fixed. These quantized embeddings are upsampled to a minimum frame rate of 50 Hz via replication before being fed into a downstream model. The downstream model comprises a two-layer bidirectional LSTM optimized with CTC loss for character-level prediction<d-cite bibtex-key="hochreiter1997long"></d-cite><d-cite bibtex-key="graves2006connectionist"></d-cite>. All models are trained on the LibriSpeech train-clean-100 subset and evaluated on the LibriSpeech dev-clean subset<d-cite bibtex-key="panayotov2015librispeech"></d-cite>, using word error rate (WER) as the metric for semantic performance, where a lower WER indicates better semantic alignment.       
+                </p>
+                
             <div class="table-responsive pt-3" id="demo-reconstructs-of-codecs">
                 <table class="table table-hover pt-2 audio-comparison-table">
                     <thead>
@@ -696,6 +713,7 @@
                     </tbody>
                 </table>
             </div>
+
             <div class="caption-container" >
                 <p class="demo-caption">
                     Reconstructed audio samples of XY-Tokenizer after pre-training and post-training stage. 
