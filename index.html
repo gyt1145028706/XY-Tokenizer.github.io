@@ -227,7 +227,7 @@
         <figure style="margin-bottom: 20px; margin-left: auto; margin-right: auto;">
             <img src="assets/XY-Tokenizer-Final.jpg" alt="XY-Tokenizer Final Image">
             <figcaption>
-                Illustration of <strong>XY-Tokenizer</strong>. The upper half depicts the pre-training stage, aligning <strong>XY-Tokenizer</strong> with text while preserving coarse acoustic features. The lower half illustrates the post-training stage, modeling finer-grained acoustic features. 
+                Illustration of <strong>XY-Tokenizer</strong>. The upper half depicts the pre-training stage, aligning <strong>XY-Tokenizer</strong> with text while preserving coarse acoustic features, forming an <strong>X-shaped</strong> architecture. The lower half illustrates the post-training stage, modeling finer-grained acoustic features, forming a <strong>Y-shaped</strong> architecture. 
             </figcaption>
         </figure>
         <h2>Overview</h2>
@@ -310,7 +310,7 @@
             </div>
             <div class="caption-container" style="font-size: 0.9em; color: #666; margin-top: 8px; text-align: left;">
                 <p class="demo-caption">
-                    Reconstructed audio samples from preliminary experiments using different pretrained models as fixed encoders. During training, only the decoder was optimized using reconstruction loss. Discriminator was not used, resulting in some metallic artifacts in the reconstructed audio. Listening carefully to these samples reveals that Whisper preserves most acoustic information, while HuBERT and WavLM lose significant acoustic details including speaker timbre and fine-grained acoustic characteristics.
+                    Reconstructed audio samples from preliminary experiments using different pretrained models as fixed encoders. During training, only the decoder was optimized using reconstruction loss. Discriminator was not used, resulting in some metallic artifacts in the reconstructed audio. Listening carefully to these samples reveals that <strong>Whisper preserves most acoustic information</strong>, while HuBERT and WavLM lose significant acoustic details including speaker timbre and fine-grained acoustic characteristics.
                 </p>
             </div>
 
@@ -355,7 +355,7 @@
             </div>
             <div class="caption-container" style="font-size: 0.9em; color: #666; margin-top: 8px; text-align: left;">
                 <p class="demo-caption">
-                    Reconstructed audio samples of XY-Tokenizer after pre-training and post-training stage. 
+                    Reconstructed audio samples of XY-Tokenizer after pre-training and post-training stage. The reconstructed audio samples after the pre-training stage exhibit metallic artifacts, which are eliminated after the post-training stage.
                 </p>
             </div>
 
@@ -364,20 +364,20 @@
                 <figure style="margin-bottom: 20px; margin-left: auto; margin-right: auto;" id="Pre-training">
                     <img src="./assets/Pre-training.jpg" alt="Pre-training Stage">
                     <figcaption>
-                        Pre-training stage of XY-Tokenizer.  It utilize a 2-channel encoder-decoder structure, forming an <strong>X-shaped</strong> architecture.
+                        Pre-training stage of XY-Tokenizer.  It utilizes a 2-channel encoder-decoder structure, forming an <strong>X-shaped</strong> architecture.
                     <!-- In the post-training stage (as shown in <a href="#Post-training" class="fig-ref"><strong>Figure X</strong></a>), we focus on modeling fine-grained acoustic features to improve audio quality. Building upon the model from the pre-training stage, we incorporate discriminators to enhance the perceptual quality of the reconstructed audio. We freeze the encoder and quantizer, discard the semantic decoder, and make only the decoder and discriminators trainable. Specifically, we employ a combination of mel-spectrogram reconstruction loss and GAN loss (consisting of adversarial loss, discriminator loss, and feature matching loss). This stage significantly improves the naturalness and fidelity of the reconstructed speech while maintaining the semantic alignment achieved in the pre-training stage. -->
                 </figure>
                 <p>
                     In the pre-training stage (as shown in <a href="#Pre-training" class="fig-ref"><strong>Figure X</strong></a>), we focus on two tasks: audio reconstruction and automatic speech recognition (ASR). All model parameters are trainable, except for the weights of the semantic encoder, which is initialized from Whisper encoder<d-cite bibtex-key="radford2022robustspeechrecognitionlargescale"></d-cite>, and the large language model (LLM), which is initialized from Qwen2.5<d-cite bibtex-key="yang2024qwen2"></d-cite>.
-                    During this stage, we employ three loss functions: mel-spectrogram reconstruction loss, ASR loss (cross-entropy loss for the LLM generator with quantized features as condition), and commitment loss for the quantizer. We do not incorporate a discriminator in the pre-training stage, which helps maintain training stability while focusing on semantic alignment and basic acoustic feature preservation.
-                    After the pre-training stage, XY-Tokenizer achieves strong text alignment while preserving most acoustic features, such as speaker timbre and coarse acoustic characteristics.
+                    During this stage, we employ three loss functions: mel-spectrogram reconstruction loss, ASR loss (cross-entropy of the LLM with quantized features as condition), and commitment loss for the quantizer. We do not incorporate a discriminator in the pre-training stage, which helps maintain training stability while focusing on semantic alignment and basic acoustic feature preservation.
+                    After the pre-training stage, XY-Tokenizer achieves strong text alignment while preserving most of the acoustic features, such as speaker timbre and coarse acoustic characteristics.
                 </p>
 
             <h3> Post-training Stage </h3>
                 <figure style="margin-bottom: 20px; margin-left: auto; margin-right: auto;" id="Post-training">
                     <img src="./assets/Post-training.jpg" alt="Post-training Stage">
                     <figcaption>
-                        Post-training stage of XY-Tokenizer. The decoder discards the text-alignment module and it forms a <strong>Y-shaped</strong> architecture.
+                        Post-training stage of XY-Tokenizer. The decoder discards the LLM module used for text-alignment and it forms a <strong>Y-shaped</strong> architecture.
                     </figcaption>
                 </figure>
                 <p>
