@@ -234,7 +234,7 @@
     </d-front-matter>
     <d-byline></d-byline>
     <d-article>
-        <figure style="margin-bottom: 20px;">
+        <figure style="margin-bottom: 20px; margin-left: auto; margin-right: auto;">
             <img src="assets/XY-Tokenizer-Final.jpg" alt="XY-Tokenizer Final Image">
             <figcaption>
                 Illustration of <strong>XY-Tokenizer</strong>. The upper half depicts the pre-training stage, aligning <strong>XY-Tokenizer</strong> with text while preserving coarse acoustic features. The lower half illustrates the post-training stage, modeling finer-grained acoustic features. 
@@ -246,8 +246,8 @@
             </p>
 
         <h2>Preliminary Experiments</h2>
-            <figure style="margin-bottom: 20px;" id="fig-preliminary-study">
-                <img src="assets/Preliminary_Study.png" alt="Preliminary Study Results">
+            <figure style="margin-bottom: 20px; width: 100%; margin-left: auto; margin-right: auto;" id="fig-preliminary-study">
+                <img src="assets/Preliminary_Study.png" alt="Preliminary Study Results" style="width: 100%;">
                 <figcaption>
                     In preliminary experiments, we trained an autoencoder using fixed encoders (Whisper, HuBERT, WavLM) with reconstruction loss only. Only the decoders were trainable during this experiment.
                 </figcaption>
@@ -371,7 +371,7 @@
 
 
             <h3> Pre-training Stage </h3>
-                <figure style="margin-bottom: 20px;" id="Pre-training">
+                <figure style="margin-bottom: 20px; margin-left: auto; margin-right: auto;" id="Pre-training">
                     <img src="./assets/Pre-training.jpg" alt="Pre-training Stage">
                     <figcaption>
                         Pre-training stage of XY-Tokenizer.  It utilize a 2-channel encoder-decoder structure, forming an <strong>X-shaped</strong> architecture.
@@ -384,7 +384,7 @@
                 </p>
 
             <h3> Post-training Stage </h3>
-                <figure style="margin-bottom: 20px;" id="Post-training">
+                <figure style="margin-bottom: 20px; margin-left: auto; margin-right: auto;" id="Post-training">
                     <img src="./assets/Post-training.jpg" alt="Post-training Stage">
                     <figcaption>
                         Post-training stage of XY-Tokenizer. The decoder discards the text-alignment module and it forms a <strong>Y-shaped</strong> architecture.
@@ -555,13 +555,13 @@
                             <td>2.41</td>
                         </tr>
                     </tbody>
+                    <caption>
+                        Comparisons between different codecs in terms of semantic and acoustic performance. WER refers to the word error rate measured on the ASR probing task Lower WER indicates better alignment with the original text content. For codecs with &gt;2k bps, bold values indicate SOTA performance; for low bitrate (&sim;1k bps) codecs, bold indicates the top 2 performing models. Baichuan refers to Baichuan Audio Tokenizer. XY-Tokenizer is the best unified codec in terms of performance in both semantic and acoustic metrics among codecs with 1kbps.
+                    </caption>
                 </table>
-                <caption>
-                    <!-- 不同编解码器在语义和声学性能方面的比较。WER指的是ASR探测任务中测量的词错误率，数值越低表示与原始文本内容的对齐程度越好。对于>2k bps的编解码器，粗体值表示最佳性能；对于低比特率(~1k bps)编解码器，粗体表示性能最好的前两个模型。Baichuan指的是百川音频分词器。 -->
-                </caption>
             </div>
 
-            <figure style="margin-bottom: 20px;" id="fig-asr-probing-task">
+            <figure style="margin-bottom: 20px; width: 100%; margin-left: auto; margin-right: auto;" id="fig-asr-probing-task">
                 <img src="assets/ASR_Probing_Task.png" alt="ASR Porbing Task">
                 <figcaption>
                     The architecture of ASR probing task. During fine-tuning, the encoder and quantizer of codec are fixed.
@@ -572,6 +572,7 @@
             <h3>Reconstruct Evaluation</h3>
                 <p>
                 To evaluate the preservation of acoustic information, we employ several metrics. Speaker similarity (SIM) is calculated as the cosine similarity between speaker embeddings. We also use short-time objective intelligibility (STOI)<d-cite bibtex-key="taal2010short"></d-cite> to measure speech intelligibility and perceptual evaluation of speech quality (PESQ)<d-cite bibtex-key="rix2001perceptual"></d-cite> to assess audio quality. All evaluations were conducted on the LibriSpeech test-clean subset<d-cite bibtex-key="panayotov2015librispeech"></d-cite>.
+                Metrics of reconstruct evaluation are shown in <a href="#table-codec-comparison" class="table-ref"><strong>Table X</strong></a>. Reconstruct speech and audios are available in <a href="#demo-reconstructs-of-codecs" class="demo-ref"><strong>Demo X</strong></a>.
                 </p>
     
             <h3>Semantic Evaluation</h3>
@@ -714,9 +715,9 @@
                 </table>
             </div>
 
-            <div class="caption-container" >
+            <div class="caption-container" style="font-size: 0.9em; color: #666; margin-top: 8px; text-align: left;">
                 <p class="demo-caption">
-                    Reconstructed audio samples of XY-Tokenizer after pre-training and post-training stage. 
+                    Reconstructed audio samples of various speech codecs. At approximately 1 kbps, XY-Tokenizer outperforms other codecs, achieving the highest naturalness and similarity to the original audio. Although trained solely on speech data from the Emilia dataset, XY-Tokenizer also demonstrates effective capability in reconstructing non-speech sounds.
                 </p>
             </div>
 
