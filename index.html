@@ -551,12 +551,7 @@
                 </table>
             </div>
 
-            <figure style="margin-bottom: 20px; width: 100%; margin-left: auto; margin-right: auto;" id="fig-asr-probing-task">
-                <img src="assets/ASR_Probing_Task.png" alt="ASR Porbing Task">
-                <figcaption>
-                    The architecture of ASR probing task. During fine-tuning, the encoder and quantizer of codec are fixed.
-                </figcaption>
-            </figure>
+
 
             
             <h3>Reconstruct Evaluation</h3>
@@ -564,8 +559,14 @@
                 To evaluate the preservation of acoustic information, we employ several metrics. Speaker similarity (SIM) is calculated as the cosine similarity between speaker embeddings. We also use short-time objective intelligibility (STOI)<d-cite bibtex-key="taal2010short"></d-cite> to measure speech intelligibility and perceptual evaluation of speech quality (PESQ)<d-cite bibtex-key="rix2001perceptual"></d-cite> to assess audio quality. All evaluations were conducted on the LibriSpeech test-clean subset<d-cite bibtex-key="panayotov2015librispeech"></d-cite>.
                 Metrics of reconstruct evaluation are shown in <a href="#table-codec-comparison" class="table-ref"><strong>Table X</strong></a>. Reconstruct speech and audios are available in <a href="#demo-reconstructs-of-codecs" class="demo-ref"><strong>Demo X</strong></a>.
                 </p>
-    
+
             <h3>Semantic Evaluation</h3>
+            <figure style="margin-bottom: 20px; width: 100%; margin-left: auto; margin-right: auto;" id="fig-asr-probing-task">
+                <img src="assets/ASR_Probing_Task.png" alt="ASR Porbing Task">
+                <figcaption>
+                    The model architecture of ASR probing task. During fine-tuning, the encoder and quantizer of codec are fixed.
+                </figcaption>
+            </figure>
                 <p>
                 To evaluate the semantic alignment between the codec and text, we employ an <strong>automatic speech recognition (ASR) probing task</strong>, adapted from the SUPERB framework<d-cite bibtex-key="yang2021superb"></d-cite>, to assess the semantic quality of tokenized representations (as shown in <a href="#fig-asr-probing-task" class="fig-ref"><strong>Figure X</strong></a>). We trained a downstream ASR model using <strong>quantized embeddings</strong>, with the pretrained codec fixed. These quantized embeddings are upsampled to a minimum frame rate of 50 Hz via replication before being fed into a downstream model. The downstream model comprises a two-layer bidirectional LSTM optimized with CTC loss for character-level prediction<d-cite bibtex-key="hochreiter1997long"></d-cite><d-cite bibtex-key="graves2006connectionist"></d-cite>. All models are trained on the LibriSpeech train-clean-100 subset and evaluated on the LibriSpeech dev-clean subset<d-cite bibtex-key="panayotov2015librispeech"></d-cite>, using word error rate (WER) as the metric for semantic performance, where a lower WER indicates better semantic alignment.       
                 </p>
