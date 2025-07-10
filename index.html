@@ -324,7 +324,7 @@
 
         <h2>Method</h2>
             <p>
-                In our empirical study, we found that training a low-bitrate speech codec from scratch is challenging, especially for VQ-GAN based speech codecs. 
+                In our empirical study, we found that training a low-bitrate speech codec from scratch is challenging, especially for RVQ-GAN based speech codecs<d-cite bibtex-key="defossez2022high"></d-cite><d-cite bibtex-key="kumar2023highfidelityaudiocompressionimproved"></d-cite><d-cite bibtex-key="zhang2024speechtokenizerunifiedspeechtokenizer"></d-cite><d-cite bibtex-key="defossez2024moshi"></d-cite>. 
                 To address this challenge, we designed a multi-stage, multi-task learning framework consisting of pre-training and post-training stages. In the pre-training stage, we employ multi-task learning to simultaneously model semantic features and coarse acoustic features. In the post-training stage, we focus on modeling fine-grained acoustic features. This section elaborates on these stages in detail.
                 Reconstructed audio samples after pre-training stage and post-training stage are shown in <a href="#demo-pre-train-post-train-stage" class="demo-ref"><strong>Demo X</strong></a>.
             </p>
@@ -556,7 +556,10 @@
             </table>
 
 
-
+            <h3> Speech Codec Selection </h3>
+                <p>
+                    We selected several speech codecs to compare with XY-Tokenizer, including SpeechTokenizer<d-cite bibtex-key="zhang2024speechtokenizerunifiedspeechtokenizer"></d-cite>, Mimi<d-cite bibtex-key="defossez2024moshi"></d-cite>, XCodec2.0<d-cite bibtex-key="ye2024codecdoesmatterexploring"></d-cite>, and Baichuan-Audio-Tokenizer<d-cite bibtex-key="li2025baichuan"></d-cite>, which model both semantic and acoustic information. We also included acoustic-only speech codecs like BigCodec<d-cite bibtex-key="xin2024bigcodecpushinglimitslowbitrate"></d-cite> and Descript Audio Codec (DAC)<d-cite bibtex-key="kumar2023highfidelityaudiocompressionimproved"></d-cite>.
+                </p>
             
             <h3>Reconstruct Evaluation</h3>
                 <p>
@@ -577,7 +580,7 @@
 
             <h3>Summarization</h3>
             <p>
-                From <a href="#table-codec-comparison" class="table-ref"><strong>Table X</strong></a> and <a href="#demo-reconstructs-of-codecs" class="demo-ref"><strong>Demo X</strong></a>, we can see that XY-Tokenizer is the best unified codec in terms of performance in both semantic and acoustic metrics among codecs at approximately 1 kbps. <strong>For semantic evaluation</strong>, speech codecs fine-tuned on ASR tasks (like Baichuan Audio Tokenizer and XY-Tokenizer) perform better on ASR probing tasks than codecs based on semantic distillation (such as SpeechTokenizer, Mimi, and XCodec2.0). We hypothesize this is due to the inherent limitations in semantic distillation, where codecs struggle to preserve semantic information at a level comparable to their teacher models. <strong>For acoustic evaluation</strong>, XY-Tokenizer's performance is comparable to BigCodec (the SOTA for acoustic evaluation at 1kbps) and only slightly behind higher-bitrate speech codecs. By analyzing the reconstructed samples, we observe that XY-Tokenizer performs effectively on clean speech (Speech-3, Speech-4) and emotionally expressive content cases (Speech-2, Speech-2), while also accurately reconstructing non-speech sounds (Sound-1, Sound-2).
+                From <a href="#table-codec-comparison" class="table-ref"><strong>Table X</strong></a> and <a href="#demo-reconstructs-of-codecs" class="demo-ref"><strong>Demo X</strong></a>, we can see that XY-Tokenizer is the best unified codec in terms of performance in both semantic and acoustic metrics among codecs at approximately 1 kbps. <strong>For semantic evaluation</strong>, speech codecs fine-tuned on ASR tasks (like Baichuan Audio Tokenizer and XY-Tokenizer) perform better on ASR probing tasks than codecs based on semantic distillation (such as SpeechTokenizer, Mimi, and XCodec2.0). We hypothesize this is due to the inherent limitations in semantic distillation, where codecs struggle to preserve semantic information at a level comparable to their teacher models. <strong>For acoustic evaluation</strong>, XY-Tokenizer's performance is comparable to BigCodec (the SOTA for acoustic evaluation at 1kbps) and only slightly behind higher-bitrate speech codecs. By analyzing the reconstructed samples, we observe that XY-Tokenizer performs effectively on clean speech (Speech-3, Speech-4) and emotionally expressive content cases (Speech-1, Speech-2), while also effectively reconstructing non-speech sounds (Sound-1, Sound-2).
             </p>
 
             <div class="table-responsive pt-3" id="demo-reconstructs-of-codecs">
