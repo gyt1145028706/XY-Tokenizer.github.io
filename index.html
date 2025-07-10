@@ -41,7 +41,6 @@
             -moz-hyphens: auto;
             -ms-hyphens: auto;
             word-spacing: normal; /* 控制单词间距 */
-            word-spacing: normal; /* 控制单词间距 */
         }
         
         /* 表格水平滚动样式 */
@@ -393,7 +392,7 @@
                 <!-- <table class="table table-hover pt-2"> -->
                     <thead>
                         <tr>
-                            <th rowspan="2">Model</th>
+                            <th rowspan="2" style="min-width: 140px;">Model</th>
                             <th rowspan="2">BPS</th>
                             <th rowspan="2">Frame Rate</th>
                             <th colspan="2" style="border-right: 2px solid #dee2e6;">Semantic</th>
@@ -546,7 +545,7 @@
                         </tr>
                     </tbody>
                     <caption>
-                        Comparisons between different codecs in terms of semantic and acoustic performance. WER refers to the word error rate measured on the ASR probing task Lower WER indicates better alignment with the original text content. For codecs with &gt;2k bps, bold values indicate SOTA performance; for low bitrate (&sim;1k bps) codecs, bold indicates the top 2 performing models. Baichuan refers to Baichuan Audio Tokenizer. XY-Tokenizer is the best unified codec in terms of performance in both semantic and acoustic metrics among codecs with 1kbps.
+                        Comparisons between different codecs in terms of semantic and acoustic performance. WER refers to the word error rate measured on the ASR probing task. Lower WER indicates better alignment with the original text content. For codecs with >2k bps, bold values indicate state-of-the-art (SOTA) performance; for low-bitrate (∼1 kbps) codecs, bold indicates the top two performing models. Baichuan refers to the Baichuan Audio Tokenizer. XY-Tokenizer is the best unified codec in terms of performance in both semantic and acoustic metrics among codecs at 1 kbps.
                     </caption>
                 <!-- </table> -->
             </table>
