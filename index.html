@@ -25,12 +25,17 @@
             font-size: 0.9em;
             color: #666;
             margin-top: 8px;
-            text-align: left;
+            text-align: justify;
+            hyphens: auto;
+            -webkit-hyphens: auto;
+            -moz-hyphens: auto;
+            -ms-hyphens: auto;
+            word-spacing: normal;
         }
         
         table caption, .table-responsive caption, .demo-caption {
             caption-side: bottom;
-            text-align: left;
+            text-align: justify;
         }
         
         /* 添加正文两端对齐样式 */
@@ -238,7 +243,7 @@
             <figure style="margin-bottom: 20px; width: 100%; margin-left: auto; margin-right: auto;" id="fig-preliminary-study">
                 <img src="assets/Preliminary_Study.png" alt="Preliminary Study Results" style="width: 100%;">
                 <figcaption>
-                    In preliminary experiments, we trained an autoencoder using fixed encoders (Whisper, HuBERT, WavLM) with reconstruction loss only. Only the decoders were trainable during this experiment.
+                    In preliminary experiments, we trained an autoencoder using fixed encoders (Whisper, HuBERT, WavLM) with reconstruction loss only to assess the reconstruction capabilities of these pre-trained models. Only the decoders were trainable during this experiment.
                 </figcaption>
             </figure>
             <table id="table-preliminary-results">
@@ -307,7 +312,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="caption-container" style="font-size: 0.9em; color: #666; margin-top: 8px; text-align: left;">
+            <div class="caption-container" style="color: #666; text-align: left;">
                 <p class="demo-caption">
                     Reconstructed audio samples from preliminary experiments using different pretrained models as fixed encoders. During training, only the decoder was optimized using reconstruction loss. Discriminator was not used, resulting in some metallic artifacts in the reconstructed audio. Listening carefully to these samples reveals that <strong>Whisper preserves most acoustic information</strong>, while HuBERT and WavLM lose significant acoustic details including speaker timbre and fine-grained acoustic characteristics.
                 </p>
@@ -352,7 +357,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="caption-container" style="font-size: 0.9em; color: #666; margin-top: 8px; text-align: left;">
+            <div class="caption-container" style="color: #666; text-align: left;">
                 <p class="demo-caption">
                     Reconstructed audio samples of XY-Tokenizer after pre-training and post-training stage. The reconstructed audio samples after the pre-training stage exhibit metallic artifacts, which are eliminated after the post-training stage.
                 </p>
@@ -710,7 +715,7 @@
                 </table>
             </div>
 
-            <div class="caption-container" style="font-size: 0.9em; color: #666; margin-top: 8px; text-align: left;">
+            <div class="caption-container" style="color: #666; text-align: left;">
                 <p class="demo-caption">
                     Reconstructed audio samples of various speech codecs. At approximately 1 kbps, XY-Tokenizer outperforms other codecs, achieving the highest naturalness and similarity to the original audio. Although trained solely on speech data from the Emilia dataset, XY-Tokenizer also demonstrates effective capability in reconstructing non-speech sounds.
                 </p>
