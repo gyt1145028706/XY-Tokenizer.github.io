@@ -129,8 +129,8 @@
                 }
             });
             
-            // 获取所有demo表格的caption (包括demo-caption类)
-            const demoCaptions = document.querySelectorAll('.table-responsive caption, .table caption, .demo-caption');
+            // 获取所有demo表格的caption (只处理demo-caption类)
+            const demoCaptions = document.querySelectorAll('.demo-caption');
             // 为每个demo caption添加编号
             demoCaptions.forEach((caption, index) => {
                 const demoNum = index + 1;
@@ -389,8 +389,8 @@
         
 
         <h2>Speech Codec Comparison</h2>
-            <div class="table-responsive pt-3" id="table-codec-comparison">
-                <table class="table table-hover pt-2">
+            <table id="table-codec-comparison">
+                <!-- <table class="table table-hover pt-2"> -->
                     <thead>
                         <tr>
                             <th rowspan="2">Model</th>
@@ -548,8 +548,8 @@
                     <caption>
                         Comparisons between different codecs in terms of semantic and acoustic performance. WER refers to the word error rate measured on the ASR probing task Lower WER indicates better alignment with the original text content. For codecs with &gt;2k bps, bold values indicate SOTA performance; for low bitrate (&sim;1k bps) codecs, bold indicates the top 2 performing models. Baichuan refers to Baichuan Audio Tokenizer. XY-Tokenizer is the best unified codec in terms of performance in both semantic and acoustic metrics among codecs with 1kbps.
                     </caption>
-                </table>
-            </div>
+                <!-- </table> -->
+            </table>
 
 
 
